@@ -9,12 +9,18 @@ class TranslatorBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-        tabs: pages
-            .map<Tab>((e) => Tab(
-                  icon: Icon(e.icon),
-                  text: e.description,
-                ))
-            .toList());
+    return Container(
+      color: Colors.white,
+      child: TabBar(
+          indicator: BoxDecoration(),
+          unselectedLabelColor: Theme.of(context).unselectedWidgetColor,
+          labelColor: Theme.of(context).primaryColor,
+          tabs: pages
+              .map<Tab>((e) => Tab(
+                    icon: Icon(e.icon),
+                    text: e.description,
+                  ))
+              .toList()),
+    );
   }
 }

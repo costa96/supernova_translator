@@ -9,8 +9,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/models/dto/language.dart';
-
-import 'file:///D:/GIT/supernova_translator/lib/utils/translation_client.dart';
+import 'package:supernova_translator/utils/translation_client.dart';
 
 void main() {
   TranslationClient _translationClient = TranslationClient();
