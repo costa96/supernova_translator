@@ -1,4 +1,4 @@
-const String GOOGLE_API_KEY = "AIzaSyDFXUXM2C7dY-FXJG9xKkzYD5e5Dhe5Vs";
+const String GOOGLE_API_KEY = "AIzaSyDFXUXM2C7dY-FXJG9xKkzYD5e5Dhe5Vs0";
 
 const String GOOGLE_TRANSLATE_API_BASE_URL =
     "https://translation.googleapis.com";

@@ -1,13 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../language.dart';
-import 'list_response.dart';
 
 part 'languages_response.g.dart';
 
 @JsonSerializable()
-class LanguagesResponse implements ListResponse<Language> {
-  LanguagesResponse({this.data});
+class LanguagesResponse {
+  LanguagesResponse(Map<String, dynamic> data)
+      : this.data = List.generate(data['languages'].length,
+            (index) => Language.fromJson(data["languages"][index]));
 
   factory LanguagesResponse.fromJson(Map<String, dynamic> json) =>
       _$LanguagesResponseFromJson(json);
@@ -17,4 +18,6 @@ class LanguagesResponse implements ListResponse<Language> {
   @override
   @JsonKey(name: 'data')
   final List<Language> data;
+
+  void k() {}
 }
