@@ -18,6 +18,4 @@ class LanguagesResponse {
   @override
   @JsonKey(name: 'data')
   final List<Language> data;
-
-  void k() {}
 }
