@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../translation.dart';
+import '../dto/translation.dart';
 
 part 'translation_response.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../language.dart';
+import '../dto/language.dart';
 
 part 'languages_response.g.dart';
 

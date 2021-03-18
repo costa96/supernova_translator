@@ -1,8 +1,8 @@
 import 'package:chopper/chopper.dart';
-import 'package:supernova_translator/models/language.dart';
+import 'package:supernova_translator/models/dto/language.dart';
+import 'package:supernova_translator/models/dto/translation.dart';
 import 'package:supernova_translator/models/responses/languages_response.dart';
 import 'package:supernova_translator/models/responses/translation_response.dart';
-import 'package:supernova_translator/models/translation.dart';
 import 'package:supernova_translator/utils/constants.dart';
 
 part 'google_translate_api_service.chopper.dart';
