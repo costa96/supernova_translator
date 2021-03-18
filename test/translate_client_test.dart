@@ -8,6 +8,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
+import 'package:supernova_translator/models/language.dart';
 import 'package:supernova_translator/utils/translation/translation_client.dart';
 
 void main() {
@@ -22,7 +23,8 @@ void main() {
   });
 
   test('Testing translation endpoint', () async {
-    Response resp = await _service.translateText("ciao!", "en");
+    Response resp = await _service.translateText(
+        "ciao!", Language(iso: "en", name: "English"));
 
     print(resp.body);
     expect(resp.isSuccessful, true);

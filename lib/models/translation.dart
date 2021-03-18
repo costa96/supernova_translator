@@ -25,10 +25,10 @@ class Translation extends Equatable {
   @JsonKey(name: 'startingText')
   String startingText;
 
-  @JsonKey(name: 'startingLanguage')
+  @JsonKey(name: 'detectedSourceLanguage')
   Language startingLanguage;
 
-  @JsonKey(name: 'finalText')
+  @JsonKey(name: 'translatedText')
   String finalText;
 
   @JsonKey(name: 'finalLanguage')

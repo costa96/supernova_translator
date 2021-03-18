@@ -4,6 +4,8 @@ import 'package:chopper/chopper.dart';
 import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/models/language.dart';
 import 'package:supernova_translator/models/responses/languages_response.dart';
+import 'package:supernova_translator/models/responses/translation_response.dart';
+import 'package:supernova_translator/models/translation.dart';
 
 import '../constants.dart' as global;
 import '../constants.dart';
@@ -29,6 +31,8 @@ class TranslationClient {
   static Map<Type, Function> converters = {
     Language: (jsonData) => Language.fromJson(jsonData),
     LanguagesResponse: (jsonData) => LanguagesResponse.fromJson(jsonData),
+    Translation: (jsonData) => Translation.fromJson(jsonData),
+    TranslationResponse: (jsonData) => TranslationResponse.fromJson(jsonData),
   };
 }
 
