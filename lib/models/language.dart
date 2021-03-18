@@ -5,7 +5,7 @@ part 'language.g.dart';
 
 @JsonSerializable()
 class Language extends Equatable {
-  Language({this.ISO, this.name});
+  const Language({this.iso, this.name});
 
   factory Language.fromJson(Map<String, dynamic> json) =>
       _$LanguageFromJson(json);
@@ -13,11 +13,11 @@ class Language extends Equatable {
   Map<String, dynamic> toJson() => _$LanguageToJson(this);
 
   @override
-  List<Object> get props => [name, ISO];
+  List<Object> get props => [name, iso];
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'name')
   final String name;
 
-  @JsonKey(name: 'id')
-  final String ISO;
+  @JsonKey(name: 'language')
+  final String iso;
 }
