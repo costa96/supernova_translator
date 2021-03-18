@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supernova_translator/interface/pages/favorite_page.dart';
 import 'package:supernova_translator/interface/pages/translate_page.dart';
-import 'package:supernova_translator/interface/widgets/translator/translator_body.dart';
 import 'package:supernova_translator/interface/widgets/translator/translator_bottom_bar.dart';
 import 'package:supernova_translator/models/translator_page.dart';
 
@@ -19,7 +18,9 @@ class MainScreen extends StatelessWidget {
         length: pages.length,
         child: Scaffold(
           appBar: _appBar(context),
-          body: TranslatorBody(pages: pages),
+          body: TabBarView(
+            children: pages.map<Widget>((e) => e.page).toList(),
+          ),
           bottomNavigationBar: TranslatorBottomBar(pages: pages),
         ));
   }
