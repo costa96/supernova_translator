@@ -28,7 +28,6 @@ class _InputTranslationState extends State<InputTranslation> {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: 400,
         child: BlocBuilder<LanguagesBloc, List<Language>>(
             bloc: _languagesBloc,
             builder: (context, List<Language> _languagesState) {
@@ -52,12 +51,6 @@ class _InputTranslationState extends State<InputTranslation> {
                     onChanged: (String text) {
                       _translationOptionsBloc.setStartingText(text);
                     },
-                  ),
-                  Expanded(
-                    child: ListView(
-                        children: _languagesState
-                            .map<Widget>((e) => Text(e.name))
-                            .toList()),
                   ),
                 ],
               );
