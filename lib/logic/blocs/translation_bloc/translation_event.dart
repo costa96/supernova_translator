@@ -1,8 +1,8 @@
-import 'package:supernova_translator/models/dto/translation.dart';
+import 'package:supernova_translator/logic/blocs/translation_options_bloc/translation_options.dart';
 
 abstract class TranslationEvent {}
 
 class GetTranslation extends TranslationEvent {
-  GetTranslation(this.translation);
-  final Translation translation;
+  GetTranslation(this.options);
+  final TranslationOptions options;
 }

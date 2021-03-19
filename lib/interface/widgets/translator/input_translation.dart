@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:supernova_translator/logic/blocs/languages_bloc/languages_bloc.dart';
+import 'package:supernova_translator/logic/blocs/translation_bloc/translation_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_options_bloc/bloc.dart';
-import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/models/dto/language.dart';
-import 'package:supernova_translator/utils/translation_client.dart';
 
 class InputTranslation extends StatefulWidget {
   @override
@@ -18,13 +16,10 @@ class _InputTranslationState extends State<InputTranslation> {
 
   @override
   void initState() {
-    TranslationClient _translationClient =
-        Provider.of<TranslationClient>(context, listen: false);
+    _languagesBloc = BlocProvider.of<LanguagesBloc>(context);
 
-    _languagesBloc = LanguagesBloc(
-        _translationClient.client.getService<GoogleTranslateApiService>());
-
-    _translationOptionsBloc = TranslationOptionsBloc();
+    _translationOptionsBloc =
+        TranslationOptionsBloc(BlocProvider.of<TranslationBloc>(context));
 
     super.initState();
   }
@@ -42,7 +37,22 @@ class _InputTranslationState extends State<InputTranslation> {
               }
               return Column(
                 children: [
-                  initialLanguageDropdown(),
+                  Row(
+                    children: [
+                      initialLanguageDropdown(),
+                      IconButton(
+                        icon: Icon(Icons.compare_arrows),
+                        onPressed: () =>
+                            _translationOptionsBloc.swapLanguages(),
+                      ),
+                      finalLanguageDropdown()
+                    ],
+                  ),
+                  TextField(
+                    onChanged: (String text) {
+                      _translationOptionsBloc.setStartingText(text);
+                    },
+                  ),
                   Expanded(
                     child: ListView(
                         children: _languagesState
@@ -72,6 +82,34 @@ class _InputTranslationState extends State<InputTranslation> {
             ),
             onChanged: (Language newValue) {
               _translationOptionsBloc.setInitialLanguage(newValue);
+            },
+            items: _languagesBloc.state
+                .map<DropdownMenuItem<Language>>((Language value) {
+              return DropdownMenuItem<Language>(
+                value: value,
+                child: Text(value.name),
+              );
+            }).toList(),
+          );
+        });
+  }
+
+  Widget finalLanguageDropdown() {
+    return BlocBuilder<TranslationOptionsBloc, TranslationOptions>(
+        bloc: _translationOptionsBloc,
+        builder: (context, TranslationOptions _optionsState) {
+          return DropdownButton<Language>(
+            value: _optionsState.finalLanguage,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (Language newValue) {
+              _translationOptionsBloc.setFinalLanguage(newValue);
             },
             items: _languagesBloc.state
                 .map<DropdownMenuItem<Language>>((Language value) {

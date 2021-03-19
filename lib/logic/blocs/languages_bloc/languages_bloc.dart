@@ -39,4 +39,11 @@ class LanguagesBloc extends Bloc<LanguagesEvent, List<Language>> {
       yield (_languages);
     }
   }
+
+  getLanguageFromIso(String iso) {
+    if ((state == null || state.isEmpty)) {
+      getLanguages();
+    }
+    return state.firstWhere((element) => element.iso == iso);
+  }
 }

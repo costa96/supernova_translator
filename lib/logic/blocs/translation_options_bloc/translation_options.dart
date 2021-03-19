@@ -11,4 +11,10 @@ class TranslationOptions {
   Language initialLanguage;
   Language finalLanguage;
   String initialText;
+
+  bool isSearchable() {
+    return initialLanguage != null &&
+        finalLanguage != null &&
+        initialText != null;
+  }
 }

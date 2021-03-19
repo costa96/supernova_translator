@@ -1,16 +1,19 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'language.dart';
 
 part 'translation.g.dart';
 
+@CopyWith()
 @JsonSerializable()
 class Translation {
   Translation(
       {this.startingLanguage,
       this.startingText,
       this.finalLanguage,
-      this.finalText});
+      this.finalText,
+      this.detectedLanguage});
 
   factory Translation.fromJson(Map<String, dynamic> json) =>
       _$TranslationFromJson(json);
@@ -21,6 +24,9 @@ class Translation {
   String startingText;
 
   @JsonKey(name: 'detectedSourceLanguage')
+  String detectedLanguage;
+
+  @JsonKey(name: 'startingLanguage')
   Language startingLanguage;
 
   @JsonKey(name: 'translatedText')
@@ -28,6 +34,8 @@ class Translation {
 
   @JsonKey(name: 'finalLanguage')
   Language finalLanguage;
+
+  bool get isDetected => detectedLanguage != null;
 
   swap() {
     Language _startingL = startingLanguage;

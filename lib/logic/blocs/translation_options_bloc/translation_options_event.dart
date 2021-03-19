@@ -23,3 +23,5 @@ class SetInitialText extends TranslationOptionsEvent {
   SetInitialText(this.text);
   final String text;
 }
+
+class SwapLanguages extends TranslationOptionsEvent {}
