@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'interface/screens/main_screen.dart';
+import 'utils/translation_client.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainScreen(),
+      home: MultiProvider(providers: [
+        Provider(
+          create: (_) => TranslationClient(),
+          dispose: (_, TranslationClient translationClient) =>
+              translationClient.dispose(),
+        ),
+      ], child: MainScreen()),
     );
   }
 }

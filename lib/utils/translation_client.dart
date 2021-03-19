@@ -24,6 +24,10 @@ class TranslationClient {
     );
   }
 
+  void dispose() {
+    _client.dispose();
+  }
+
   ChopperClient _client;
 
   ChopperClient get client => _client;
