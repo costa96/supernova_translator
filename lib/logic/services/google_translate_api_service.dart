@@ -35,10 +35,10 @@ abstract class GoogleTranslateApiService extends ChopperService {
   Future<Response<TranslationResponse>> translateText(
       @Query() String q, @Query() Language target,
       {@Query() String format,
-      @Query() String source,
+      @Query() Language source,
       @Query() String model}) async {
     Response<TranslationResponse> response = await _translateText(q, target.iso,
-        format: format, source: source, model: model);
+        format: format, source: source.iso, model: model);
 
     List<Translation> _translation = response.body.data;
 

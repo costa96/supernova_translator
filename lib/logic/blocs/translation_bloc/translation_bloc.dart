@@ -25,11 +25,9 @@ class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
 
       List<Translation> _translations = <Translation>[];
 
-      Response<TranslationResponse> response =
-          await _translateApiService.translateText(
-        event.options.initialText,
-        event.options.finalLanguage,
-      );
+      Response<TranslationResponse> response = await _translateApiService
+          .translateText(event.options.initialText, event.options.finalLanguage,
+              source: event.options.initialLanguage);
 
       if (response.isSuccessful) {
         response.body.data.forEach((element) {

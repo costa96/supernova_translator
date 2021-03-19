@@ -25,15 +25,19 @@ class TranslationCard extends StatelessWidget {
                   translation.finalText,
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.015,
-                ),
                 if (translation.isDetected)
-                  Text(
-                    'Detected language: ${translation.startingLanguage.name} (${translation.startingLanguage.iso})',
-                    style: TextStyle(
-                        color: Theme.of(context).dividerColor,
-                        fontWeight: FontWeight.w600),
+                  Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.015,
+                      ),
+                      Text(
+                        'Detected language: ${translation.startingLanguage.name} (${translation.startingLanguage.iso})',
+                        style: TextStyle(
+                            color: Theme.of(context).dividerColor,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   )
               ],
             ),

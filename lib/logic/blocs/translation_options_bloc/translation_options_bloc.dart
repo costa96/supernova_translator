@@ -45,7 +45,7 @@ class TranslationOptionsBloc
             finalLanguage: state.initialLanguage));
       } else {
         TranslationOptions _newOptions = TranslationOptions(
-            initialLanguage: state.finalLanguage,
+            initialLanguage: state.finalLanguage ?? Language.detect(),
             initialText: state.initialText);
         yield (_newOptions);
       }

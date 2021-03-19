@@ -8,7 +8,7 @@ class LanguageSelector extends StatefulWidget {
   LanguageSelector({bool isInitial = true})
       : this.type = isInitial
             ? LanguageSelectorType.initialLanguage
-            : LanguageSelectorType.finalLanaguage;
+            : LanguageSelectorType.finalLanguage;
   final LanguageSelectorType type;
 
   @override
@@ -32,17 +32,26 @@ class _LanguageSelectorState extends State<LanguageSelector> {
     return BlocBuilder<LanguagesBloc, List<Language>>(
         bloc: _languagesBloc,
         builder: (context, List<Language> languagesState) {
-          List<Language> languages = [];
-          if (languagesState != null) {
-            if (widget.type == LanguageSelectorType.initialLanguage) {
-              languages.add(Language.detect());
-            }
-            languages.addAll(languagesState);
-          }
-
           return BlocBuilder<TranslationOptionsBloc, TranslationOptions>(
               bloc: _translationOptionsBloc,
               builder: (context, TranslationOptions _optionsState) {
+                List<Language> languages = [];
+                if (languagesState != null) {
+                  if (widget.type == LanguageSelectorType.initialLanguage) {
+                    languages.add(Language.detect());
+                  }
+                  languages.addAll(languagesState);
+                }
+                if (widget.type == LanguageSelectorType.initialLanguage) {
+                  if (_optionsState.finalLanguage != null) {
+                    languages.remove(_optionsState.finalLanguage);
+                  }
+                } else {
+                  if (_optionsState.initialLanguage != Language.detect()) {
+                    languages.remove(_optionsState.initialLanguage);
+                  }
+                }
+
                 return DropdownButton<Language>(
                   value: widget.type == LanguageSelectorType.initialLanguage
                       ? _optionsState.initialLanguage
@@ -78,4 +87,4 @@ class _LanguageSelectorState extends State<LanguageSelector> {
   }
 }
 
-enum LanguageSelectorType { initialLanguage, finalLanaguage }
+enum LanguageSelectorType { initialLanguage, finalLanguage }
