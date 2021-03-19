@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supernova_translator/interface/widgets/translator/input_translation.dart';
-import 'package:supernova_translator/interface/widgets/translator/translation_options.dart';
+import 'package:supernova_translator/interface/widgets/translator/translations_list.dart';
 
 class TranslatePage extends StatelessWidget {
   @override
@@ -18,7 +18,7 @@ class TranslatePage extends StatelessWidget {
                 fontWeight: FontWeight.w500),
           ),
         ),
-        Expanded(child: TranslationOptions())
+        Expanded(child: TranslationsList())
       ],
     );
   }

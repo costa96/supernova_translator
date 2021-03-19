@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'language.dart';
@@ -6,7 +5,7 @@ import 'language.dart';
 part 'translation.g.dart';
 
 @JsonSerializable()
-class Translation extends Equatable {
+class Translation {
   Translation(
       {this.startingLanguage,
       this.startingText,
@@ -17,10 +16,6 @@ class Translation extends Equatable {
       _$TranslationFromJson(json);
 
   Map<String, dynamic> toJson() => _$TranslationToJson(this);
-
-  @override
-  List<Object> get props =>
-      [startingText, startingLanguage, finalText, finalLanguage];
 
   @JsonKey(name: 'startingText')
   String startingText;

@@ -3,7 +3,7 @@ import 'package:supernova_translator/interface/widgets/translator/translation_ca
 import 'package:supernova_translator/models/dto/language.dart';
 import 'package:supernova_translator/models/dto/translation.dart';
 
-class TranslationOptions extends StatelessWidget {
+class TranslationsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
