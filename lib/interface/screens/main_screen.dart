@@ -27,7 +27,12 @@ class MainScreen extends StatelessWidget {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      leading: MediaQuery.of(context).viewInsets.bottom > 0
+          ? IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () => FocusScope.of(context).unfocus(),
+            )
+          : null,
       title: Center(
         child: Text('Supernova Translator'),
       ),

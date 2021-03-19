@@ -16,6 +16,8 @@ class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
   void getTranslation(TranslationOptions options) =>
       add(GetTranslation(options));
 
+  void cleanTranslation() => add(CleanTranslation());
+
   @override
   Stream<List<Translation>> mapEventToState(TranslationEvent event) async* {
     if (event is GetTranslation) {
@@ -42,6 +44,8 @@ class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
       }
 
       yield (_translations);
+    } else if (event is CleanTranslation) {
+      yield ([]);
     }
   }
 }

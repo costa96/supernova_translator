@@ -20,20 +20,13 @@ class LanguagesBloc extends Bloc<LanguagesEvent, List<Language>> {
     if (event is GetLanguages) {
       yield (null);
 
-      List<Language> _languages;
+      List<Language> _languages = <Language>[];
 
       Response<LanguagesResponse> response =
           await _translateApiService.getLanguages(target: event.target);
 
-      if (!response.isSuccessful) {
-        _languages = <Language>[];
-      } else {
+      if (response.isSuccessful) {
         _languages = response.body.data;
-        _languages.insert(
-            0,
-            Language(
-              name: "Detect",
-            ));
       }
 
       yield (_languages);

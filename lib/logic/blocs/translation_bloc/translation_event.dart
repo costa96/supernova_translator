@@ -6,3 +6,5 @@ class GetTranslation extends TranslationEvent {
   GetTranslation(this.options);
   final TranslationOptions options;
 }
+
+class CleanTranslation extends TranslationEvent {}
