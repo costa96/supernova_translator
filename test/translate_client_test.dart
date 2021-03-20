@@ -18,7 +18,7 @@ void main() {
 
   test('Testing languages endpoint', () async {
     Response resp = await _service.getLanguages();
-    print(resp.body);
+
     expect(resp.isSuccessful, true);
   });
 
@@ -26,7 +26,6 @@ void main() {
     Response resp = await _service.translateText(
         "ciao!", Language(iso: "en", name: "English"));
 
-    print(resp.body);
     expect(resp.isSuccessful, true);
   });
 
@@ -36,7 +35,6 @@ void main() {
         _translationClient.client.getService<GoogleTranslateApiService>();
     Response resp = await _service.getLanguages();
 
-    print(resp.body);
     expect(resp.isSuccessful, true);
   });
 }

@@ -7,8 +7,11 @@ import 'package:supernova_translator/logic/services/google_translate_api_service
 import 'package:supernova_translator/models/dto/translation.dart';
 import 'package:supernova_translator/models/responses/translation_response.dart';
 
+import 'loading/loading_translation_bloc.dart';
+
 class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
-  TranslationBloc(this._translateApiService, this._languagesBloc) : super(null);
+  TranslationBloc(this._translateApiService, this._languagesBloc)
+      : super(<Translation>[]);
 
   GoogleTranslateApiService _translateApiService;
   LanguagesBloc _languagesBloc;
@@ -18,11 +21,25 @@ class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
 
   void cleanTranslation() => add(CleanTranslation());
 
+  bool _loading = false;
+
+  void startLoading() {
+    if (!_loading) {
+      _loading = true;
+      _loadingBloc.setLoading();
+    }
+  }
+
+  final LoadingTranslationBloc _loadingBloc = LoadingTranslationBloc();
+
+  LoadingTranslationBloc get loadingBloc => _loadingBloc;
+
   @override
   Stream<List<Translation>> mapEventToState(TranslationEvent event) async* {
     if (event is GetTranslation) {
-      yield (null);
+      _loadingBloc.setLoading();
 
+      _loading = true;
       List<Translation> _translations = <Translation>[];
 
       Response<TranslationResponse> response = await _translateApiService
@@ -40,7 +57,8 @@ class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
           }
         });
       }
-
+      _loading = false;
+      _loadingBloc.setLoading(loading: false);
       yield (_translations);
     } else if (event is CleanTranslation) {
       yield ([]);

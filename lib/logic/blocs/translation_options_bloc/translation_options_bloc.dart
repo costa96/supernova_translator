@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/translation_bloc.dart';
 import 'package:supernova_translator/models/dto/language.dart';
+import 'package:supernova_translator/utils/debouncer.dart';
 
 import 'translation_options.dart';
 import 'translation_options_event.dart';
@@ -20,6 +21,7 @@ class TranslationOptionsBloc
   void setStartingText(String text) => add(SetInitialText(text));
 
   void swapLanguages() => add(SwapLanguages());
+  Debouncer _debouncer = Debouncer();
 
   @override
   Stream<TranslationOptions> mapEventToState(
@@ -52,7 +54,9 @@ class TranslationOptionsBloc
     }
 
     if (state.isSearchable()) {
-      _translationBloc.getTranslation(state);
+      _translationBloc.startLoading();
+
+      _debouncer(() => _translationBloc.getTranslation(state));
     } else {
       _translationBloc.cleanTranslation();
     }
