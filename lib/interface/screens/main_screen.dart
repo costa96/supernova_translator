@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supernova_translator/interface/pages/favorite_page.dart';
 import 'package:supernova_translator/interface/pages/translate_page.dart';
 import 'package:supernova_translator/interface/widgets/translator/translator_bottom_bar.dart';
+import 'package:supernova_translator/logic/blocs/preferences_bloc/preferences_bloc.dart';
 import 'package:supernova_translator/models/translator_page.dart';
 
 class MainScreen extends StatelessWidget {
@@ -18,8 +20,11 @@ class MainScreen extends StatelessWidget {
         length: pages.length,
         child: Scaffold(
           appBar: _appBar(context),
-          body: TabBarView(
-            children: pages.map<Widget>((e) => e.page).toList(),
+          body: BlocProvider(
+            create: (BuildContext context) => PreferencesBloc(),
+            child: TabBarView(
+              children: pages.map<Widget>((e) => e.page).toList(),
+            ),
           ),
           bottomNavigationBar: TranslatorBottomBar(pages: pages),
         ));

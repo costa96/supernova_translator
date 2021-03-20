@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supernova_translator/logic/blocs/translation_bloc/loading/loading_translation_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/translation_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_options_bloc/bloc.dart';
 
@@ -46,11 +47,22 @@ class _InputTranslationState extends State<InputTranslation> {
               ),
               TextField(
                 textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(hintText: "Translate me"),
+                decoration: InputDecoration(
+                    hintText: "Translate me", focusedBorder: InputBorder.none),
                 onChanged: (String text) {
                   _translationOptionsBloc.setStartingText(text);
                 },
               ),
+              BlocBuilder<LoadingTranslationBloc, bool>(
+                  bloc: BlocProvider.of<TranslationBloc>(context).loadingBloc,
+                  builder: (context, bool loading) {
+                    return LinearProgressIndicator(
+                      value: loading ? null : 0,
+                      minHeight: 2,
+                      backgroundColor:
+                          loading ? null : Theme.of(context).primaryColor,
+                    );
+                  }),
             ],
           )),
     );

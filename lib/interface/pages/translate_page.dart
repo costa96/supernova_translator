@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:supernova_translator/interface/widgets/translator/input_translation.dart';
 import 'package:supernova_translator/interface/widgets/translator/translations_list.dart';
 import 'package:supernova_translator/logic/blocs/languages_bloc/languages_bloc.dart';
+import 'package:supernova_translator/logic/blocs/preferences_bloc/preferences_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/translation_bloc.dart';
 import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/utils/translation_client.dart';
@@ -32,6 +33,7 @@ class _TranslatePageState extends State<TranslatePage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (BuildContext context) => PreferencesBloc()),
         BlocProvider(
           create: (BuildContext context) =>
               TranslationBloc(_translateApiService, _languagesBloc),
