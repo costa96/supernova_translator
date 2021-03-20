@@ -41,12 +41,16 @@ class TranslationBloc extends Bloc<TranslationEvent, List<Translation>> {
 
       _loading = true;
       List<Translation> _translations = <Translation>[];
+      Response<TranslationResponse> response;
+      bool success = false;
+      try {
+        response = await _translateApiService.translateText(
+            event.options.initialText, event.options.finalLanguage,
+            source: event.options.initialLanguage);
+        success = response.isSuccessful;
+      } catch (e) {}
 
-      Response<TranslationResponse> response = await _translateApiService
-          .translateText(event.options.initialText, event.options.finalLanguage,
-              source: event.options.initialLanguage);
-
-      if (response.isSuccessful) {
+      if (success) {
         response.body.data.forEach((element) {
           if (element.isDetected) {
             _translations.add(element.copyWith(

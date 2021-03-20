@@ -31,39 +31,43 @@ class _TranslationCardState extends State<TranslationCard> {
             child: Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(widget.translation.startingText),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      Text(
-                        widget.translation.finalText,
-                        style: TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      if (widget.translation.isDetected)
-                        Column(
-                          children: [
-                            Container(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.015,
-                            ),
-                            Text(
-                              'Detected language: ${widget.translation.startingLanguage.name} (${widget.translation.startingLanguage.iso})',
-                              style: TextStyle(
-                                  color: Theme.of(context).dividerColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        )
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(widget.translation.startingText),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        ),
+                        Text(
+                          widget.translation.finalText,
+                          style: TextStyle(fontWeight: FontWeight.w800),
+                        ),
+                        if (widget.translation.isDetected)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                              Text(
+                                'Detected language: ${widget.translation.startingLanguage.name} (${widget.translation.startingLanguage.iso})',
+                                style: TextStyle(
+                                    color: Theme.of(context).dividerColor,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          )
+                      ],
+                    ),
                   ),
                   IconButton(
-                      onPressed: () => _singlePreferenceBloc.toggle(),
+                      onPressed: () =>
+                          _singlePreferenceBloc.toggle(widget.translation),
                       icon: Icon(
                           isSaved ? Icons.favorite : Icons.favorite_border))
                 ],

@@ -6,26 +6,25 @@ import 'package:supernova_translator/utils/debouncer.dart';
 import 'single_preference_event.dart';
 
 class SinglePreferenceBloc extends Bloc<SinglePreferenceEvent, bool> {
-  SinglePreferenceBloc(this._preferencesBloc, this._translation)
-      : super(_preferencesBloc.state.contains(_translation));
+  SinglePreferenceBloc(this._preferencesBloc, Translation translation)
+      : super(_preferencesBloc.state.contains(translation));
 
   final PreferencesBloc _preferencesBloc;
-  final Translation _translation;
 
   Debouncer _debouncer = Debouncer();
 
-  void toggle() => add(Toggle());
+  void toggle(Translation translation) => add(Toggle(translation));
 
   @override
   Stream<bool> mapEventToState(SinglePreferenceEvent event) async* {
     if (event is Toggle) {
       if (state) {
         _debouncer.call(() {
-          _preferencesBloc.removePreference(_translation);
+          _preferencesBloc.removePreference(event.translation);
         });
       } else {
         _debouncer.call(() {
-          _preferencesBloc.addPreference(_translation);
+          _preferencesBloc.addPreference(event.translation);
         });
       }
 

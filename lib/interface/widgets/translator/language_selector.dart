@@ -56,12 +56,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                   value: widget.type == LanguageSelectorType.initialLanguage
                       ? _optionsState.initialLanguage
                       : _optionsState.finalLanguage,
-                  icon: languagesState == null
-                      ? Container(
-                          height: MediaQuery.of(context).size.width * 0.04,
-                          width: MediaQuery.of(context).size.width * 0.04,
-                          child: CircularProgressIndicator())
-                      : Icon(Icons.arrow_drop_down),
+                  icon: Icon(Icons.arrow_drop_down),
                   isExpanded: true,
                   underline: Container(
                     height: 1,

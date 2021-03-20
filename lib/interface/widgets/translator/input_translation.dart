@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supernova_translator/interface/widgets/translator/swap_button.dart';
+import 'package:supernova_translator/logic/blocs/focus_textfield_bloc/bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/loading/loading_translation_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/translation_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_options_bloc/bloc.dart';
@@ -13,11 +15,19 @@ class InputTranslation extends StatefulWidget {
 
 class _InputTranslationState extends State<InputTranslation> {
   TranslationOptionsBloc _translationOptionsBloc;
+  FocusTextfieldBloc _focusTextfieldBloc;
+  FocusNode focus;
 
   @override
   void initState() {
     _translationOptionsBloc =
         TranslationOptionsBloc(BlocProvider.of<TranslationBloc>(context));
+    _focusTextfieldBloc = FocusTextfieldBloc();
+
+    focus = FocusNode();
+    focus.addListener(() {
+      setState(() => _focusTextfieldBloc.toggle());
+    });
 
     super.initState();
   }
@@ -34,10 +44,8 @@ class _InputTranslationState extends State<InputTranslation> {
                 child: Row(
                   children: [
                     Expanded(child: LanguageSelector()),
-                    IconButton(
-                      icon: Icon(Icons.swap_horiz),
-                      onPressed: () => _translationOptionsBloc.swapLanguages(),
-                    ),
+                    BlocProvider.value(
+                        value: _translationOptionsBloc, child: SwapButton()),
                     Expanded(
                         child: LanguageSelector(
                       isInitial: false,
@@ -45,24 +53,50 @@ class _InputTranslationState extends State<InputTranslation> {
                   ],
                 ),
               ),
-              TextField(
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                    hintText: "Translate me", focusedBorder: InputBorder.none),
-                onChanged: (String text) {
-                  _translationOptionsBloc.setStartingText(text);
-                },
+              Stack(
+                children: [
+                  TextField(
+                    focusNode: focus,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                        hintText: "Translate me",
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor))),
+                    onChanged: (String text) {
+                      _translationOptionsBloc.setStartingText(text);
+                    },
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: BlocBuilder<FocusTextfieldBloc, bool>(
+                        bloc: _focusTextfieldBloc,
+                        builder: (context, bool isFocused) {
+                          if (isFocused) {
+                            return BlocBuilder<LoadingTranslationBloc, bool>(
+                                bloc: BlocProvider.of<TranslationBloc>(context)
+                                    .loadingBloc,
+                                builder: (context, bool loading) {
+                                  return Container(
+                                    color: Colors.white,
+                                    child: LinearProgressIndicator(
+                                      value: loading ? null : 0,
+                                      minHeight: 2,
+                                      backgroundColor: loading
+                                          ? null
+                                          : Theme.of(context).primaryColor,
+                                    ),
+                                  );
+                                });
+                          }
+
+                          return Container();
+                        }),
+                  ),
+                ],
               ),
-              BlocBuilder<LoadingTranslationBloc, bool>(
-                  bloc: BlocProvider.of<TranslationBloc>(context).loadingBloc,
-                  builder: (context, bool loading) {
-                    return LinearProgressIndicator(
-                      value: loading ? null : 0,
-                      minHeight: 2,
-                      backgroundColor:
-                          loading ? null : Theme.of(context).primaryColor,
-                    );
-                  }),
             ],
           )),
     );
