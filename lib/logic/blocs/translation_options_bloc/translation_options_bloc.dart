@@ -13,6 +13,8 @@ class TranslationOptionsBloc
 
   TranslationBloc _translationBloc;
 
+  void setOptions(TranslationOptions options) => add(SetOptions(options));
+
   void setInitialLanguage(Language language) =>
       add(SetInitialLanguage(language));
 
@@ -26,7 +28,9 @@ class TranslationOptionsBloc
   @override
   Stream<TranslationOptions> mapEventToState(
       TranslationOptionsEvent event) async* {
-    if (event is SetInitialLanguage) {
+    if (event is SetOptions) {
+      yield (event.options);
+    } else if (event is SetInitialLanguage) {
       yield (state.copyWith(initialLanguage: event.language));
     } else if (event is SetFinalLanguage) {
       yield (state.copyWith(finalLanguage: event.language));
