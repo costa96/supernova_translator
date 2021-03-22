@@ -25,7 +25,12 @@ dev_dependencies:
   json_serializable: 3.5.1
   chopper_generator: ^3.0.6
   copy_with_extension_gen: ^1.4.0
-
+  flutter_launcher_icons: ^0.8.0
 
 flutter:
   uses-material-design: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.jpg"
