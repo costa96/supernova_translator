@@ -3,14 +3,10 @@
 Supernova's translator task
 
 ## Getting Started
+I used BLoC management for the task.
+iOS haven't been tested (I don't eve either a mac or an iphone sadly), but there is no reason for it not to work :)
 
-This project is a starting point for a Flutter application.
+Before building run the following command lines:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- flutter pub get
+- flutter pub run build_runner build
