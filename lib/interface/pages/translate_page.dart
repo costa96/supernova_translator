@@ -4,19 +4,23 @@ import 'package:provider/provider.dart';
 import 'package:supernova_translator/interface/widgets/translator/input_translation.dart';
 import 'package:supernova_translator/interface/widgets/translator/translations_list.dart';
 import 'package:supernova_translator/logic/blocs/languages_bloc/languages_bloc.dart';
-import 'package:supernova_translator/logic/blocs/preferences_bloc/preferences_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/translation_bloc.dart';
-import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/utils/translation_client.dart';
+
+import 'file:///D:/GIT/supernova_translator/lib/logic/services/api_comunication/google_translate_api_service.dart';
 
 class TranslatePage extends StatefulWidget {
   @override
   _TranslatePageState createState() => _TranslatePageState();
 }
 
-class _TranslatePageState extends State<TranslatePage> {
+class _TranslatePageState extends State<TranslatePage>
+    with AutomaticKeepAliveClientMixin {
   GoogleTranslateApiService _translateApiService;
   LanguagesBloc _languagesBloc;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -33,7 +37,6 @@ class _TranslatePageState extends State<TranslatePage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (BuildContext context) => PreferencesBloc()),
         BlocProvider(
           create: (BuildContext context) =>
               TranslationBloc(_translateApiService, _languagesBloc),

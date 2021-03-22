@@ -7,9 +7,11 @@
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
+import 'package:supernova_translator/logic/services/preferences.dart';
 import 'package:supernova_translator/models/dto/language.dart';
 import 'package:supernova_translator/utils/translation_client.dart';
+
+import 'file:///D:/GIT/supernova_translator/lib/logic/services/api_comunication/google_translate_api_service.dart';
 
 void main() {
   TranslationClient _translationClient = TranslationClient();
@@ -36,5 +38,12 @@ void main() {
     Response resp = await _service.getLanguages();
 
     expect(resp.isSuccessful, true);
+  });
+
+  test('Testing detection endpoint', () async {
+    Preferences preferences = Preferences();
+    List k = await preferences.loadFavoriteTranslation();
+
+    expect(k.length == 0, true);
   });
 }

@@ -21,6 +21,7 @@ class MainScreen extends StatelessWidget {
         child: Scaffold(
           appBar: _appBar(context),
           body: BlocProvider(
+            lazy: false,
             create: (BuildContext context) => PreferencesBloc(),
             child: TabBarView(
               children: pages.map<Widget>((e) => e.page).toList(),

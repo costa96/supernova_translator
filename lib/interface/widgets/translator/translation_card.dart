@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supernova_translator/logic/blocs/preferences_bloc/preferences_bloc.dart';
-import 'package:supernova_translator/logic/blocs/single_preference_bloc/bloc.dart';
 import 'package:supernova_translator/models/dto/translation.dart';
 
 class TranslationCard extends StatefulWidget {
@@ -13,20 +12,22 @@ class TranslationCard extends StatefulWidget {
 }
 
 class _TranslationCardState extends State<TranslationCard> {
-  SinglePreferenceBloc _singlePreferenceBloc;
+  PreferencesBloc _preferencesBloc;
+
+  bool isSaved;
 
   @override
   void initState() {
-    _singlePreferenceBloc = SinglePreferenceBloc(
-        BlocProvider.of<PreferencesBloc>(context), widget.translation);
+    _preferencesBloc = BlocProvider.of<PreferencesBloc>(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SinglePreferenceBloc, bool>(
-        bloc: _singlePreferenceBloc,
-        builder: (context, bool isSaved) {
+    return BlocBuilder<PreferencesBloc, List<Translation>>(
+        bloc: _preferencesBloc,
+        builder: (context, List<Translation> translations) {
+          isSaved = translations.contains(widget.translation);
           return Card(
             child: Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
@@ -66,8 +67,7 @@ class _TranslationCardState extends State<TranslationCard> {
                     ),
                   ),
                   IconButton(
-                      onPressed: () =>
-                          _singlePreferenceBloc.toggle(widget.translation),
+                      onPressed: () => toggle(),
                       icon: Icon(
                           isSaved ? Icons.favorite : Icons.favorite_border))
                 ],
@@ -75,5 +75,13 @@ class _TranslationCardState extends State<TranslationCard> {
             ),
           );
         });
+  }
+
+  void toggle() {
+    if (isSaved) {
+      _preferencesBloc.removePreference(widget.translation);
+    } else {
+      _preferencesBloc.addPreference(widget.translation);
+    }
   }
 }

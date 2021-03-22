@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supernova_translator/logic/blocs/languages_bloc/languages_bloc.dart';
 import 'package:supernova_translator/logic/blocs/translation_bloc/translation_event.dart';
 import 'package:supernova_translator/logic/blocs/translation_options_bloc/translation_options.dart';
-import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/models/dto/translation.dart';
 import 'package:supernova_translator/models/responses/translation_response.dart';
+
+import 'file:///D:/GIT/supernova_translator/lib/logic/services/api_comunication/google_translate_api_service.dart';
 
 import 'loading/loading_translation_bloc.dart';
 

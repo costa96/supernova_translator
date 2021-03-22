@@ -1,8 +1,9 @@
 import 'package:chopper/chopper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supernova_translator/logic/services/google_translate_api_service.dart';
 import 'package:supernova_translator/models/dto/language.dart';
 import 'package:supernova_translator/models/responses/languages_response.dart';
+
+import 'file:///D:/GIT/supernova_translator/lib/logic/services/api_comunication/google_translate_api_service.dart';
 
 import 'bloc.dart';
 

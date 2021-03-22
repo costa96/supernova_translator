@@ -1,40 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supernova_translator/interface/widgets/translator/translation_card.dart';
-import 'package:supernova_translator/models/dto/language.dart';
+import 'package:supernova_translator/logic/blocs/preferences_bloc/bloc.dart';
 import 'package:supernova_translator/models/dto/translation.dart';
 
-class FavoritePage extends StatelessWidget {
-  Language english = Language(name: "English", iso: "en");
+class FavoritePage extends StatefulWidget {
+  @override
+  _FavoritePageState createState() => _FavoritePageState();
+}
 
-  Language italian = Language(name: "Italian", iso: "it");
+class _FavoritePageState extends State<FavoritePage>
+    with AutomaticKeepAliveClientMixin {
+  PreferencesBloc _preferencesBloc;
 
-  Language romanian = Language(name: "Romanian", iso: "ro");
+  @override
+  void initState() {
+    _preferencesBloc = BlocProvider.of<PreferencesBloc>(context);
+    super.initState();
+  }
 
-  Language spanish = Language(name: "Spanish", iso: "es");
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    List<Translation> translations = [
-      Translation(
-          startingText: "Ciao",
-          startingLanguage: italian,
-          finalLanguage: spanish,
-          finalText: "Hola"),
-      Translation(
-          startingText: "Ciao",
-          startingLanguage: italian,
-          finalLanguage: english,
-          finalText: "Hi"),
-      Translation(
-          startingText: "Ciau",
-          startingLanguage: romanian,
-          finalLanguage: italian,
-          finalText: "Ciao"),
-    ];
-
-    return ListView(
-      shrinkWrap: true,
-      children: translations.map((e) => TranslationCard(e)).toList(),
-    );
+    return BlocBuilder<PreferencesBloc, List<Translation>>(
+        bloc: _preferencesBloc,
+        builder: (context, List<Translation> translationsSaved) {
+          return ListView(
+            shrinkWrap: true,
+            children: translationsSaved.map((e) => TranslationCard(e)).toList(),
+          );
+        });
   }
 }
